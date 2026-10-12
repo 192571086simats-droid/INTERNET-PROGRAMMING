@@ -1,0 +1,48 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hotel Booking</title>
+<style>
+body{font-family:Arial;background:#eaf5f5;text-align:center}
+section{background:white;margin:10px;padding:10px}
+input,select,button{padding:7px;margin:4px}
+</style>
+</head>
+<body>
+<h2>Hotel Room Booking</h2>
+<section><h3>Register / Login / Profile</h3>
+<input id="name" placeholder="Name"><input placeholder="Email">
+<button onclick="alert('Registered / Logged in')">Register / Login</button>
+<button onclick="alert('Profile: '+name.value)">View Profile</button></section>
+<section><h3>Search and Book Room</h3>
+<input id="dest" placeholder="Destination"><input id="in" type="date">
+<input id="out" type="date"><input id="guests" type="number" min="1" placeholder="Guests">
+<select id="room"><option>Single ₹1000</option><option>Double ₹2000</option><option>Deluxe ₹3000</option><option>Suite ₹5000</option></select>
+<button onclick="book()">Check Availability / Book</button><p id="result"></p>
+<p id="history">Booking History: None</p>
+<button onclick="change()">Change Booking</button><button onclick="cancel()">Cancel Booking</button></section>
+<section><h3>Payment / Review</h3>
+<button onclick="alert('Demo payment successful')">Pay Now</button>
+<input id="review" placeholder="Review and rating">
+<button onclick="alert('Thank you for your review')">Submit Review</button></section>
+<section><h3>Admin Panel</h3>
+<input id="pass" type="password" placeholder="Admin Password">
+<button onclick="alert(pass.value==='admin123'?'Admin Login Success':'Invalid Password')">Admin Login</button>
+<input id="price" type="number" placeholder="New Room Price">
+<button onclick="alert('Room price updated: ₹'+price.value)">Update Price</button>
+<button onclick="alert('Booking details updated')">Update Booking</button></section>
+<section><h3>About / Contact / Help</h3>
+<p>Rooms: Single, Double, Deluxe, Suite</p>
+<p>Contact: hotel@example.com | Q&A: Contact reception for help.</p>
+<p>Travel Guide: Ask reception about local attractions.</p>
+<p>Privacy: Customer information must be kept secure.</p></section>
+<script>
+let booked=false;
+function book(){if(!dest.value||!in.value||!out.value||out.value<=in.value)return alert("Enter valid booking details");booked=true;result.innerText="Room available! Booking successful.";history.innerText=name.value+" | "+room.value+" | "+in.value+" to "+out.value;}
+function change(){if(!booked)return alert("No booking");if((new Date(in.value)-new Date())/86400000<3)return alert("Changes allowed only 3 days before arrival");alert("Change dates and book again");}
+function cancel(){if(!booked)return alert("No booking");if((new Date(in.value)-new Date())/86400000<3)return alert("Cancellation allowed only 3 days before arrival");booked=false;history.innerText="Booking cancelled";}
+</script>
+</body>
+</html>
+```
