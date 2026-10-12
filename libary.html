@@ -1,0 +1,51 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Library Management System</title>
+<style>
+body{font-family:Arial;background:#e8f5e9;text-align:center}
+section{background:white;margin:10px;padding:12px;border-radius:10px}
+input,button,select{padding:8px;margin:5px}
+</style>
+</head>
+<body>
+<h1>Library Management System</h1>
+<section><h3>Student Login / Register</h3>
+<input id="user" placeholder="Student Name">
+<input type="password" placeholder="Password">
+<button onclick="alert('Login successful')">Login</button>
+<button onclick="alert('Registration successful')">Register</button>
+</section>
+<section><h3>Search Book</h3>
+<input id="book" placeholder="Enter Book Name">
+<button onclick="search()">Search</button><p id="result"></p>
+<button onclick="borrow()">Borrow Book</button>
+<p id="history">Borrow History: No books</p>
+<p>Issue Date: Today | Expected Return: 14 days</p>
+<button onclick="alert('Fine: ₹50')">Check Fine</button>
+</section>
+<section><h3>Study Materials</h3>
+<select id="year"><option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option></select>
+<select id="sem"><option>Semester 1</option><option>Semester 2</option></select>
+<button onclick="alert('Material available')">Search Material</button>
+<a href="material.pdf" download>Download Material</a></section>
+<section><h3>My Profile</h3><p id="profile">Student Profile</p>
+<button onclick="profile.innerText=user.value">View Profile</button></section>
+<section><h3>Librarian Admin</h3>
+<input id="admin" placeholder="Admin Password">
+<button onclick="alert(admin.value==='admin123'?'Admin Login Successful':'Invalid Password')">Login</button>
+<input id="newbook" placeholder="Book Name">
+<button onclick="alert('Book added: '+newbook.value)">Add Book</button>
+<button onclick="alert('Book updated or deleted')">Update/Delete Book</button>
+<button onclick="alert('Book issued to student')">Issue Book</button>
+<button onclick="alert('Book returned successfully')">Return Book</button>
+<button onclick="alert('Fine calculated: ₹50')">Make Fine</button>
+</section>
+<script>
+function search(){result.innerText=book.value?"Book found: "+book.value:"Enter book name";}
+function borrow(){if(!book.value)return alert("Search a book first");history.innerText="Borrowed: "+book.value;}
+</script>
+</body>
+</html>
+```
