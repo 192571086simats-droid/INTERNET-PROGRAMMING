@@ -1,0 +1,39 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Train Reservation System</title>
+<style>
+body{font-family:Arial;background:#e8f0ff;text-align:center}
+form{background:white;padding:20px;margin:20px auto;width:320px;border-radius:10px}
+input,select,button{padding:8px;margin:6px;width:90%}
+button{background:navy;color:white;cursor:pointer}
+</style>
+</head>
+<body>
+<h2>Online Train Reservation System</h2>
+<form>
+<h3>Passenger Login</h3>
+<input placeholder="Username" required>
+<input type="password" placeholder="Password" required>
+<h3>Book Train Ticket</h3>
+<input placeholder="Origin Station" required>
+<input placeholder="Destination Station" required>
+<input type="date" required>
+<input type="text" placeholder="Passenger Name" required>
+<select>
+<option>Select Class</option><option>Sleeper</option>
+<option>AC 3 Tier</option><option>AC 2 Tier</option>
+</select>
+<select><option>Payment Mode</option><option>Online</option><option>Offline</option></select>
+<button type="button" onclick="alert('Demo booking submitted!')">Book Ticket</button>
+<h3>PNR Status</h3>
+<input placeholder="Enter PNR Number">
+<button type="button" onclick="alert('Demo: Check PNR status')">Check PNR</button>
+<h3>Cancel Ticket</h3>
+<input placeholder="Enter PNR to Cancel">
+<button type="button" onclick="alert('Demo cancellation request submitted!')">Cancel Ticket</button>
+</form>
+</body>
+</html>
+```

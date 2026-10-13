@@ -1,0 +1,59 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Beauty Parlour Booking</title>
+<style>
+body{font-family:Arial;background:#fff0f5;text-align:center}
+section{background:white;margin:12px;padding:12px;border-radius:12px}
+input,select,button,textarea{padding:8px;margin:5px}
+button{background:#d63384;color:white;border:0}
+</style>
+</head>
+<body>
+<h1>💄 Beauty Parlour Booking</h1>
+<section>
+<h3>Customer Login</h3>
+<input id="name" placeholder="Customer Name">
+<input placeholder="Email">
+<button onclick="alert('Login Successful')">Login</button>
+</section>
+<section>
+<h3>Book Appointment</h3>
+<select id="service">
+<option>Hair Styling</option><option>Facial</option>
+<option>Manicure</option><option>Bridal Makeup</option>
+</select>
+<select id="stylist">
+<option>Priya</option><option>Divya</option>
+</select>
+<input id="date" type="date">
+<input id="time" type="time">
+<button onclick="book()">Book Now</button>
+<p id="result"></p>
+</section>
+<section>
+<h3>My Reservations</h3>
+<p id="history">No appointments</p>
+<button onclick="cancel()">Cancel Appointment</button>
+</section>
+<section>
+<h3>Payment</h3>
+<select id="payment"><option>Full Payment</option><option>Partial Deposit</option><option>PayPal (Demo)</option><option>Stripe (Demo)</option></select>
+<button onclick="alert('Demo payment selected')">Pay Now</button>
+</section>
+<section>
+<h3>Manager Panel</h3>
+<input id="status" placeholder="Enter booking status">
+<button onclick="result.innerText='Status: '+status.value">Update Status</button>
+<textarea placeholder="Customer Feedback"></textarea>
+</section>
+<script>
+function book(){if(!name.value||!date.value||!time.value){alert("Enter name, date and time");return}
+history.innerText=name.value+" - "+service.value+" - "+stylist.value+" - "+date.value+" "+time.value;
+result.innerText="Appointment booked successfully!";}
+function cancel(){history.innerText="Appointment cancelled";result.innerText="Booking cancelled";}
+</script>
+</body>
+</html>
+```

@@ -1,0 +1,44 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bus Ticket Booking</title>
+<style>
+body{font-family:Arial;background:#eaf2ff;text-align:center}
+section{background:white;margin:10px;padding:10px}
+input,select,button{padding:7px;margin:4px}
+</style>
+</head>
+<body>
+<h2>Bus Ticket Booking System</h2>
+<section><h3>Login / Registration</h3>
+<input id="name" placeholder="Username"><input type="password" placeholder="Password">
+<button onclick="alert('Login successful')">Login</button>
+<button onclick="alert('Registration successful')">Register</button>
+<button onclick="alert('Reset password through admin')">Forgot Password</button></section>
+<section><h3>Search Bus</h3>
+<input id="from" placeholder="From"><input id="to" placeholder="Destination">
+<input id="date" type="date"><select id="type"><option>Volvo</option><option>Sleeper Coach</option><option>AC Coach</option></select>
+<button onclick="searchBus()">Search</button><p id="result"></p>
+<input id="seat" type="number" min="1" placeholder="Number of Seats">
+<button onclick="book()">Book Ticket</button><p id="ticket"></p>
+<button onclick="cancel()">Cancel Ticket</button></section>
+<section><h3>Comments</h3><input id="comment" placeholder="Enter comment">
+<button onclick="alert(comment.value)">Submit Comment</button></section>
+<section><h3>Admin Panel</h3>
+<input id="pass" type="password" placeholder="Admin Password">
+<button onclick="alert(pass.value==='admin123'?'Admin Login Success':'Invalid Password')">Admin Login</button>
+<input id="bus" placeholder="Bus Information">
+<button onclick="alert('Bus added or updated: '+bus.value)">Add / Update Bus</button>
+<button onclick="alert('Bus category updated')">Manage Category</button>
+<button onclick="alert('Users and news managed')">Manage Users / News</button>
+<button onclick="alert('Total bookings: '+count)">Generate Report</button></section>
+<script>
+let count=0;
+function searchBus(){result.innerText=from.value&&to.value&&date.value?"Bus available! Seats available":"Enter route and date";}
+function book(){if(!name.value||!from.value||!to.value||!date.value||seat.value<1)return alert("Fill all details");count++;ticket.innerText="Ticket booked for "+name.value+" | "+from.value+" to "+to.value+" | "+seat.value+" seat(s)";}
+function cancel(){ticket.innerText="Ticket cancelled";}
+</script>
+</body>
+</html>
+```

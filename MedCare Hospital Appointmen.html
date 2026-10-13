@@ -1,0 +1,47 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>MedCare Hospital</title>
+<style>
+body{font-family:Arial;background:#eaf6ff;text-align:center}
+section{background:white;margin:10px;padding:12px;border-radius:10px}
+input,select,button{padding:8px;margin:5px}
+button{background:#087f8c;color:white;border:0}
+</style>
+</head>
+<body>
+<h1>🏥 MedCare Hospital</h1>
+<section><h3>Patient Registration / Login</h3>
+<input id="name" placeholder="Patient Name"><input placeholder="Email">
+<button onclick="alert('Login Successful')">Login</button></section>
+<section><h3>Search Doctor / Hospital</h3>
+<input id="location" placeholder="Enter Location">
+<select id="specialty"><option>Cardiology</option><option>Dermatology</option><option>Orthopedics</option><option>General Physician</option></select>
+<button onclick="search()">Search</button><p id="doctor"></p></section>
+<section><h3>Book Appointment</h3>
+<input id="date" type="date"><input id="time" type="time">
+<button onclick="book()">Book Now</button>
+<button onclick="cancel()">Cancel</button><p id="status"></p></section>
+<section><h3>Check-in / Past Appointments</h3>
+<input id="checkin" placeholder="Enter Check-in Details">
+<button onclick="alert(checkin.value||'Enter details')">Submit Check-in</button>
+<p id="history">No appointments</p></section>
+<section><h3>Rating and Review</h3>
+<input id="review" placeholder="Write doctor review">
+<button onclick="alert('Review: '+review.value)">Submit Review</button></section>
+<section><h3>Hospital Admin</h3>
+<input id="hospital" placeholder="Hospital Name">
+<input id="details" placeholder="Hospital Details / Location">
+<button onclick="alert(hospital.value+' - '+details.value)">Update Hospital</button>
+<button onclick="alert('Appointments: '+(history.innerText==='No appointments'?0:1))">View Statistics</button></section>
+<script>
+function search(){doctor.innerText="Hospital: "+location.value+" | Doctor: "+specialty.value}
+function book(){if(!name.value||!date.value||!time.value){alert("Enter patient name, date and time");return}
+history.innerText=date.value+" "+time.value+" - "+specialty.value;
+status.innerText="Appointment Booked Successfully";}
+function cancel(){history.innerText="Appointment Cancelled";status.innerText="Booking Cancelled";}
+</script>
+</body>
+</html>
+```

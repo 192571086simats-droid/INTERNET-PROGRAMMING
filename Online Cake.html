@@ -1,0 +1,52 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Buy a Cake</title>
+<style>
+body{font-family:Arial;background:#fff0f5;text-align:center}
+section{background:white;margin:12px;padding:12px;border-radius:10px}
+input,select,button{padding:8px;margin:5px}
+button{background:#e75480;color:white;border:0;cursor:pointer}
+</style>
+</head>
+<body>
+<h1>🎂 Buy a Cake</h1>
+<section>
+<h3>Student Register / Login</h3>
+<input id="user" placeholder="Enter Name">
+<input placeholder="Email">
+<button onclick="alert('Login Successful')">Login</button>
+</section>
+<section>
+<h3>Search Cakes</h3>
+<input id="search" placeholder="Search cake" oninput="filter()">
+<select id="cat" onchange="filter()">
+<option value="all">All Categories</option>
+<option value="Chocolate">Chocolate</option>
+<option value="Vanilla">Vanilla</option>
+<option value="Birthday">Birthday</option>
+</select>
+<div id="cakes"></div>
+</section>
+<section>
+<h3>My Cart</h3>
+<p id="cart">No cakes selected</p>
+<input id="address" placeholder="Shipping Address">
+<button onclick="order()">Place Order</button>
+<p id="status"></p>
+</section>
+<section>
+<h3>Admin Panel</h3>
+<input id="admin" placeholder="Admin cake/order status">
+<button onclick="document.getElementById('status').innerText='Order Status: '+document.getElementById('admin').value">Update Status</button>
+</section>
+<script>
+let data=[["Chocolate Cake","Chocolate",500],["Vanilla Cake","Vanilla",350],["Birthday Cake","Birthday",700]],selected="";
+function filter(){cakes.innerHTML="";data.filter(c=>(cat.value=="all"||c[1]==cat.value)&&c[0].toLowerCase().includes(search.value.toLowerCase())).forEach(c=>cakes.innerHTML+=`<p>${c[0]} - ₹${c[2]} <button onclick="selected='${c[0]}';cart.innerText='${c[0]} - ₹${c[2]}'">Add to Cart</button></p>`)}
+function order(){if(!selected||!address.value)alert("Select cake and enter address");else status.innerText="Order placed for "+selected+"! Delivery: Pending"}
+filter();
+</script>
+</body>
+</html>
+```

@@ -1,0 +1,40 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Flight Reservation</title>
+<style>
+body{font-family:Arial;background:#eaf2ff;text-align:center}
+section{background:white;margin:12px;padding:12px;border-radius:10px}
+input,select,button{padding:8px;margin:5px}
+</style>
+</head>
+<body>
+<h1>✈ Flight Reservation System</h1>
+<section><h3>Admin / User Login</h3>
+<input placeholder="Username"><input type="password" placeholder="Password">
+<button onclick="alert('Login successful')">Login</button>
+<button onclick="alert('Contact admin to reset password')">Forgot Password</button></section>
+<section><h3>Search Flight</h3>
+<input id="from" placeholder="From"><input id="to" placeholder="Destination">
+<input id="date" type="date"><select id="cls"><option>Economy</option><option>Business</option><option>First Class</option></select>
+<button onclick="search()">Search Flight</button><p id="result"></p></section>
+<section><h3>Book Ticket</h3>
+<input id="name" placeholder="Passenger Name"><input id="seats" type="number" min="1" value="1">
+<button onclick="book()">Book Ticket</button><p id="ticket"></p>
+<button onclick="alert('Demo payment successful')">Pay Now</button>
+<button onclick="print()">Print Ticket</button>
+<button onclick="cancel()">Cancel Ticket</button></section>
+<section><h3>My Ticket / Booking Status</h3><p id="status">No booking</p>
+<h3>Customer Feedback</h3><input id="feedback" placeholder="Enter feedback">
+<button onclick="alert('Feedback submitted')">Submit Feedback</button></section>
+<section><h3>Admin Report</h3><button onclick="alert('Total bookings: '+count)">View Report</button></section>
+<script>
+let count=0;
+function search(){result.innerText=from.value&&to.value&&date.value?"Flight available: ₹3000":"Enter flight details";}
+function book(){if(!name.value||!from.value||!to.value||!date.value)return alert("Fill all details");count++;ticket.innerText="Ticket: "+name.value+" | "+from.value+" to "+to.value+" | "+cls.value;status.innerText="Booking Confirmed";}
+function cancel(){ticket.innerText="";status.innerText="Booking Cancelled";}
+</script>
+</body>
+</html>
+```
