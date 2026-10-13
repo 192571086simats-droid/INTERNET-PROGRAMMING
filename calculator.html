@@ -1,0 +1,50 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Arithmetic Operations</title>
+</head>
+
+<body>
+
+<h1>Simple Arithmetic</h1>
+
+<input type="number" id="a" placeholder="Enter number 1">
+<br><br>
+
+<input type="number" id="b" placeholder="Enter number 2">
+<br><br>
+
+<button onclick="cal('+')">+</button>
+<button onclick="cal('-')">-</button>
+<button onclick="cal('*')">*</button>
+<button onclick="cal('/')">/</button>
+
+<h2 id="result">Result:</h2>
+
+<script>
+function cal(op) {
+
+    let a = Number(document.getElementById("a").value);
+    let b = Number(document.getElementById("b").value);
+    let r;
+
+    if (op == '+')
+        r = a + b;
+
+    else if (op == '-')
+        r = a - b;
+
+    else if (op == '*')
+        r = a * b;
+
+    else
+        r = a / b;
+
+    document.getElementById("result").innerHTML = "Result: " + r;
+}
+</script>
+
+</body>
+</html>
+```
