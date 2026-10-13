@@ -1,0 +1,105 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Priyalatha Profile</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #74ebd5, #ACB6E5);
+            text-align: center;
+            padding: 40px;
+        }
+
+        .profile {
+            background: white;
+            width: 350px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px gray;
+        }
+
+        img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 4px solid #4b6cb7;
+            object-fit: cover;
+        }
+
+        h1 {
+            color: #4b6cb7;
+        }
+
+        h3 {
+            color: #555;
+        }
+
+        .info {
+            background: #f0f4ff;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 10px;
+        }
+
+        .skill {
+            display: inline-block;
+            background: #4b6cb7;
+            color: white;
+            padding: 7px 12px;
+            margin: 5px;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="profile">
+
+        <!-- Profile Photo -->
+        <img id="photo" src="https://via.placeholder.com/140">
+
+        <br><br>
+
+        <!-- Upload Photo -->
+        <input type="file" accept="image/*"
+               onchange="showPhoto(event)">
+
+        <h1>Priyalatha</h1>
+
+        <h3>B.E Computer Science</h3>
+
+        <div class="info">
+            <b>Register No:</b> 192571086
+        </div>
+
+        <div class="info">
+            <b>Year:</b> 2nd Year
+        </div>
+
+        <div class="info">
+            <b>Interest:</b> Web Development
+        </div>
+
+        <h3>My Skills</h3>
+
+        <span class="skill">HTML</span>
+        <span class="skill">CSS</span>
+        <span class="skill">Java</span>
+        <span class="skill">C</span>
+
+    </div>
+
+    <script>
+        function showPhoto(event) {
+            document.getElementById("photo").src =
+            URL.createObjectURL(event.target.files[0]);
+        }
+    </script>
+
+</body>
+</html>
+```
