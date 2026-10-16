@@ -1,0 +1,142 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Insure Easy</title>
+<style>
+body{font-family:Arial;background:#eaf5ff;margin:0;color:#234}
+header{background:#075985;color:white;text-align:center;padding:20px}
+nav{background:#123e59;text-align:center;padding:10px}
+button{background:#087f8c;color:white;padding:9px;margin:5px;border:0;border-radius:5px;cursor:pointer}
+nav button{background:white;color:#075985}
+section{background:white;margin:15px;padding:18px;border-radius:10px}
+input,select{padding:10px;margin:5px;border:1px solid #ccc;border-radius:5px}
+h2{color:#075985}
+footer{background:#123e59;color:white;text-align:center;padding:12px}
+</style>
+</head>
+<body>
+
+<header>
+<h1>🛡️ Insure Easy</h1>
+<p>Your Insurance, Our Responsibility</p>
+</header>
+
+<nav>
+<button onclick="show('home')">Home</button>
+<button onclick="show('login')">Login</button>
+<button onclick="show('register')">Agent Register</button>
+<button onclick="show('admin')">Admin</button>
+<button onclick="show('agent')">Agent Dashboard</button>
+<button onclick="show('user')">User Dashboard</button>
+<button onclick="logout()">Logout</button>
+</nav>
+
+<section id="home">
+<h2>Welcome to Insure Easy</h2>
+<p>Compare insurance policies and manage your insurance details easily.</p>
+<h3>Available Policies</h3>
+<ul>
+<li>Health Insurance</li>
+<li>Auto Insurance</li>
+<li>Home Insurance</li>
+</ul>
+<button onclick="show('login')">Get Started</button>
+</section>
+
+<section id="login" hidden>
+<h2>Login</h2>
+<input id="username" placeholder="Enter username">
+<input id="password" type="password" placeholder="Enter password">
+<select id="role">
+<option>Admin</option>
+<option>Agent</option>
+<option>User</option>
+</select>
+<button onclick="login()">Login</button>
+<p id="loginmsg"></p>
+</section>
+
+<section id="register" hidden>
+<h2>Agent Registration</h2>
+<input id="agentname" placeholder="Agent Name">
+<input id="agentemail" type="email" placeholder="Email">
+<input id="agentpass" type="password" placeholder="Password">
+<button onclick="registerAgent()">Register Agent</button>
+<p id="regmsg"></p>
+</section>
+
+<section id="admin" hidden>
+<h2>Admin Dashboard</h2>
+<h3>Approve Agent Login</h3>
+<div id="agentlist"></div>
+<h3>All Customer Details</h3>
+<div id="customerlist"></div>
+<h3>All Policies</h3>
+<div id="policylist"></div>
+</section>
+
+<section id="agent" hidden>
+<h2>Agent Dashboard</h2>
+<h3>Create Customer</h3>
+<input id="custname" placeholder="Customer Name">
+<input id="custphone" placeholder="Customer Phone">
+<button onclick="addCustomer()">Add Customer</button>
+
+<h3>Manage Customer Policy</h3>
+<input id="policycustomer" placeholder="Customer Name">
+<select id="policytype">
+<option>Health Insurance</option>
+<option>Auto Insurance</option>
+<option>Home Insurance</option>
+</select>
+<input id="premium" type="number" placeholder="Premium Amount">
+<input id="duedate" type="date">
+<button onclick="addPolicy()">Add Policy</button>
+
+<h3>Send Renewal Alert</h3>
+<input id="alertcustomer" placeholder="Customer Name">
+<button onclick="sendAlert()">Send Alert</button>
+<div id="agentresult"></div>
+</section>
+
+<section id="user" hidden>
+<h2>User Dashboard</h2>
+<input id="findcustomer" placeholder="Enter your customer name">
+<button onclick="viewPolicies()">View My Policies</button>
+<div id="userpolicies"></div>
+<h3>Renewal Notifications</h3>
+<div id="notifications"></div>
+</section>
+
+<footer>
+<p>© 2026 Insure Easy | Online Insurance Management</p>
+</footer>
+
+<script>
+let agents=JSON.parse(localStorage.getItem("ieAgents")||"[]");
+let customers=JSON.parse(localStorage.getItem("ieCustomers")||"[]");
+let policies=JSON.parse(localStorage.getItem("iePolicies")||"[]");
+let alerts=JSON.parse(localStorage.getItem("ieAlerts")||"[]");
+let currentUser="";
+let currentRole="";
+
+function show(id){
+document.querySelectorAll("body>section").forEach(s=>s.hidden=true);
+document.getElementById(id).hidden=false;
+if(id==="admin")displayAdmin();
+if(id==="agent")displayAgent();
+if(id==="user")displayNotifications();
+}
+
+function login(){
+let u=document.getElementById("username").value.trim();
+let p=document.getElementById("password").value;
+let r=document.getElementById("role").value;
+if(!u||!p){alert("Enter username and password");return;}
+if(r==="Admin"&&u==="admin"&&p==="admin123"){
+currentUser=u;currentRole=r;show("admin");return;
+}
+if(r==="Agent"){
+let a=agents.find(x=>x.name===u&&x.password===p&&x.approved);
+if(!a){alert

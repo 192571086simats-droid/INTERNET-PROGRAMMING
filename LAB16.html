@@ -1,0 +1,128 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Home Finder</title>
+<style>
+body{font-family:Arial;margin:0;background:#eef5f9;color:#263746}
+header{background:#164e63;color:white;text-align:center;padding:22px}
+nav{background:#0f3445;text-align:center;padding:12px}
+button{background:#07818c;color:white;border:0;padding:10px;
+margin:4px;border-radius:5px;cursor:pointer}
+nav button{background:white;color:#164e63}
+section{background:white;margin:15px;padding:18px;border-radius:10px}
+input,select{padding:10px;margin:5px;border:1px solid #ccc;
+border-radius:5px}
+.cards{display:flex;flex-wrap:wrap;gap:15px}
+.card{background:#f4f9fb;padding:15px;width:230px;
+border-radius:10px;border:1px solid #d5e5eb}
+.price{color:#07818c;font-weight:bold}
+h2{color:#164e63}
+a{color:#07818c}
+footer{background:#0f3445;color:white;text-align:center;padding:15px}
+</style>
+</head>
+<body>
+
+<header>
+<h1>🏡 Home Finder</h1>
+<p>Find Your Dream Home Within Your Budget</p>
+</header>
+
+<nav>
+<button onclick="show('home')">Home</button>
+<button onclick="show('login')">Buyer Login</button>
+<button onclick="show('saved')">Saved Searches</button>
+<button onclick="show('favorites')">Favorites</button>
+<button onclick="show('agents')">Find Agents</button>
+<button onclick="show('mortgage')">Mortgage Calculator</button>
+<button onclick="show('visits')">Customer Visits</button>
+<button onclick="logout()">Logout</button>
+</nav>
+
+<section id="home">
+<h2>Search Properties</h2>
+<input id="location" placeholder="Enter city or area">
+<select id="type">
+<option>All</option>
+<option>House</option>
+<option>Apartment</option>
+<option>Land</option>
+<option>Commercial</option>
+</select>
+<input id="budget" type="number" placeholder="Maximum budget (₹)">
+<select id="purpose">
+<option>Buy</option>
+<option>Rent</option>
+</select>
+<button onclick="searchProperties()">Search</button>
+<button onclick="saveSearch()">Save Search Criteria</button>
+
+<h2>Available Properties</h2>
+<div id="properties" class="cards"></div>
+
+<h2>Explore Property Locations</h2>
+<p>Search for a property and open its location in Google Maps.</p>
+<a href="https://maps.google.com" target="_blank">Open Google Maps</a>
+
+<h2>Property Advertisements</h2>
+<p>Explore real estate resources and property listings.</p>
+<a href="https://www.99acres.com" target="_blank">99acres</a> |
+<a href="https://www.magicbricks.com" target="_blank">Magicbricks</a> |
+<a href="https://housing.com" target="_blank">Housing.com</a>
+</section>
+
+<section id="login" hidden>
+<h2>Buyer Login / Registration</h2>
+<input id="buyer" placeholder="Enter username">
+<input id="password" type="password" placeholder="Enter password">
+<button onclick="register()">Register</button>
+<button onclick="login()">Login</button>
+<p id="loginmsg"></p>
+</section>
+
+<section id="saved" hidden>
+<h2>Saved Search Criteria</h2>
+<div id="savedlist"></div>
+</section>
+
+<section id="favorites" hidden>
+<h2>Favorite Properties</h2>
+<div id="favlist" class="cards"></div>
+</section>
+
+<section id="agents" hidden>
+<h2>Find Real Estate Agents</h2>
+<input id="agentsearch" placeholder="Search agent or company"
+oninput="displayAgents()">
+<div id="agentlist"></div>
+</section>
+
+<section id="mortgage" hidden>
+<h2>Mortgage Calculator</h2>
+<input id="loan" type="number" placeholder="Loan amount (₹)">
+<input id="rate" type="number" placeholder="Annual interest (%)">
+<input id="years" type="number" placeholder="Loan period (years)">
+<button onclick="calculate()">Calculate EMI</button>
+<h3 id="emi"></h3>
+</section>
+
+<section id="visits" hidden>
+<h2>Customer Visit Records</h2>
+<p id="visitcount"></p>
+<div id="visitlist"></div>
+</section>
+
+<footer>
+<p>© 2026 Home Finder | Find. Explore. Own.</p>
+</footer>
+
+<script>
+let properties=[
+{id:1,name:"Modern Family House",location:"Chennai",
+type:"House",price:6500000,desc:"3 bedrooms, garden and parking"},
+{id:2,name:"Luxury Apartment",location:"Chennai",
+type:"Apartment",price:4200000,desc:"2 bedrooms with security"},
+{id:3,name:"Residential Land",location:"Coimbatore",
+type:"Land",price:1800000,desc:"1200 sq.ft residential plot"},
+{id:4,name:"Commercial Office

@@ -1,0 +1,165 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>StyleHub Fashion Store</title>
+<style>
+body{font-family:Arial;margin:0;background:#fff5f7;color:#333}
+header{background:#8e2455;color:white;text-align:center;padding:20px}
+nav{background:#4d1734;text-align:center;padding:12px}
+button{padding:9px;margin:4px;border:0;border-radius:5px;
+background:#a83265;color:white;cursor:pointer}
+nav button{background:white;color:#8e2455}
+section{background:white;margin:15px;padding:18px;border-radius:10px}
+input,select{padding:10px;margin:5px;border:1px solid #ddd;
+border-radius:5px}
+.products{display:flex;flex-wrap:wrap;gap:15px}
+.card{background:#fff5f7;padding:15px;width:190px;
+border:1px solid #f0c4d5;border-radius:10px;text-align:center}
+.price{color:#a83265;font-weight:bold}
+h2{color:#8e2455}
+footer{background:#4d1734;color:white;text-align:center;padding:15px}
+img{width:100%;height:130px;object-fit:cover;border-radius:8px}
+</style>
+</head>
+<body>
+
+<header>
+<h1>👗 StyleHub</h1>
+<p>Discover Your Style | Fashion for Everyone</p>
+</header>
+
+<nav>
+<button onclick="show('home')">Home</button>
+<button onclick="show('login')">Login / Register</button>
+<button onclick="show('cart')">Cart 🛒 (<span id="count">0</span>)</button>
+<button onclick="show('orders')">My Orders</button>
+<button onclick="show('admin')">Admin</button>
+<button onclick="show('exit')">Logout / Exit</button>
+</nav>
+
+<section id="home">
+<h2>Shop by Category</h2>
+<div id="categories"></div>
+
+<h2>Fashion Subcategories</h2>
+<p>Men: Shirts, T-Shirts, Trousers | Women: Dresses, Tops, Sarees |
+Kids: Casual Wear, Party Wear | Footwear | Accessories</p>
+
+<h2>Find Your Fashion</h2>
+<input id="search" placeholder="Search products..."
+oninput="displayProducts()">
+<select id="category" onchange="displayProducts()">
+<option>All</option>
+<option>Men</option>
+<option>Women</option>
+<option>Kids</option>
+<option>Footwear</option>
+<option>Accessories</option>
+</select>
+
+<div id="products" class="products"></div>
+</section>
+
+<section id="login" hidden>
+<h2>Customer Login / Registration</h2>
+<input id="username" placeholder="Enter your name">
+<input id="email" type="email" placeholder="Enter email">
+<button onclick="login()">Login / Register</button>
+<p id="message"></p>
+</section>
+
+<section id="cart" hidden>
+<h2>Shopping Cart</h2>
+<div id="cartitems"></div>
+<h3 id="total">Total: ₹0</h3>
+<button onclick="checkout()">Checkout</button>
+</section>
+
+<section id="orders" hidden>
+<h2>Order History and Status</h2>
+<div id="orderlist"></div>
+</section>
+
+<section id="admin" hidden>
+<h2>Admin Product Management</h2>
+<input id="pname" placeholder="Product name">
+<select id="pcategory">
+<option>Men</option>
+<option>Women</option>
+<option>Kids</option>
+<option>Footwear</option>
+<option>Accessories</option>
+</select>
+<input id="pprice" type="number" placeholder="Price">
+<input id="pdesc" placeholder="Product description">
+<button onclick="addProduct()">Add Product</button>
+<h3>Available Products</h3>
+<div id="adminlist"></div>
+</section>
+
+<section id="exit" hidden>
+<h2>Thank You for Visiting StyleHub!</h2>
+<p>Stay fashionable. Visit us again!</p>
+<button onclick="show('home')">Return to Home</button>
+</section>
+
+<footer>
+<p>© 2026 StyleHub Fashion Store</p>
+</footer>
+
+<script>
+let products=[
+{id:1,name:"Men's Shirt",category:"Men",price:999,
+desc:"Stylish casual cotton shirt"},
+{id:2,name:"Women's Dress",category:"Women",price:1499,
+desc:"Elegant party wear dress"},
+{id:3,name:"Kids T-Shirt",category:"Kids",price:499,
+desc:"Comfortable cotton T-shirt"},
+{id:4,name:"Sports Shoes",category:"Footwear",price:1999,
+desc:"Lightweight sports footwear"},
+{id:5,name:"Handbag",category:"Accessories",price:1299,
+desc:"Trendy everyday handbag"},
+{id:6,name:"Men's T-Shirt",category:"Men",price:699,
+desc:"Modern printed T-shirt"},
+{id:7,name:"Women's Top",category:"Women",price:899,
+desc:"Fashionable casual top"}
+];
+
+let cart=[];
+let customer=localStorage.getItem("styleCustomer")||"";
+let orders=JSON.parse(localStorage.getItem("styleOrders")||"[]");
+
+function show(id){
+document.querySelectorAll("body>section").forEach(s=>s.hidden=true);
+document.getElementById(id).hidden=false;
+if(id==="cart")displayCart();
+if(id==="orders")displayOrders();
+if(id==="admin")displayAdmin();
+}
+
+function displayCategories(){
+let cats=["Women","Men","Kids","Footwear","Accessories"];
+document.getElementById("categories").innerHTML=cats.map(c=>
+`<button onclick="filterCategory('${c}')">${c}</button>`).join("");
+}
+
+function filterCategory(c){
+document.getElementById("category").value=c;
+displayProducts();
+}
+
+function displayProducts(){
+let q=document.getElementById("search").value.toLowerCase();
+let c=document.getElementById("category").value;
+let list=products.filter(p=>
+p.name.toLowerCase().includes(q)&&
+(c==="All"||p.category===c));
+
+document.getElementById("products").innerHTML=list.map(p=>`
+<div class="card">
+<div style="font-size:55px">${p.category==="Footwear"?"👟":
+p.category==="Accessories"?"👜":
+p.category==="Kids"?"🧒":
+p.category==="Women"?"👗":"👔"}</div>
+<h3>${p.name}</h

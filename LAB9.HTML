@@ -1,0 +1,274 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>TechSavvy Online Shopping</title>
+<style>
+body{font-family:Arial;margin:0;background:#f1f5f9;color:#222}
+header{background:#142d4e;color:white;padding:20px;text-align:center}
+nav{background:#087f8c;padding:12px;text-align:center}
+nav button,button{padding:9px;margin:4px;border:0;border-radius:5px;
+background:#087f8c;color:white;cursor:pointer}
+nav button{background:white;color:#087f8c}
+section{background:white;margin:15px;padding:18px;border-radius:10px}
+input,select{padding:10px;margin:5px;border:1px solid #ccc;border-radius:5px}
+.products{display:flex;flex-wrap:wrap;gap:15px}
+.card{background:#f8fafc;padding:15px;width:190px;border-radius:8px;
+border:1px solid #ddd;text-align:center}
+.price{color:#087f8c;font-weight:bold}
+h2{color:#142d4e}
+footer{background:#142d4e;color:white;text-align:center;padding:15px}
+</style>
+</head>
+<body>
+
+<header>
+<h1>🛍️ TechSavvy</h1>
+<p>Your One-Stop Gadget Shopping Store</p>
+</header>
+
+<nav>
+<button onclick="show('home')">Home</button>
+<button onclick="show('login')">Login</button>
+<button onclick="show('cart')">Cart 🛒 (<span id="count">0</span>)</button>
+<button onclick="show('orders')">My Orders</button>
+<button onclick="show('admin')">Admin</button>
+<button onclick="show('leave')">Logout / Exit</button>
+</nav>
+
+<section id="home">
+<h2>Shop by Category</h2>
+<p>Popular categories are displayed first.</p>
+<div id="categories"></div>
+<h2>Search Products</h2>
+<input id="search" placeholder="Search gadgets..."
+oninput="displayProducts()">
+<select id="category" onchange="displayProducts()">
+<option value="All">All Categories</option>
+<option>Smartphones</option>
+<option>Laptops</option>
+<option>Tablets</option>
+<option>Accessories</option>
+</select>
+<div id="products" class="products"></div>
+</section>
+
+<section id="login" hidden>
+<h2>Customer Login / Registration</h2>
+<input id="username" placeholder="Enter your name">
+<input id="email" type="email" placeholder="Enter email">
+<button onclick="login()">Login / Register</button>
+<p id="loginmsg"></p>
+</section>
+
+<section id="cart" hidden>
+<h2>Shopping Cart</h2>
+<div id="cartitems"></div>
+<h3 id="total">Total: ₹0</h3>
+<button onclick="checkout()">Checkout</button>
+</section>
+
+<section id="orders" hidden>
+<h2>Order History and Order Status</h2>
+<div id="orderlist"></div>
+</section>
+
+<section id="admin" hidden>
+<h2>Administrator Panel</h2>
+<input id="aname" placeholder="Product name">
+<select id="acategory">
+<option>Smartphones</option>
+<option>Laptops</option>
+<option>Tablets</option>
+<option>Accessories</option>
+</select>
+<input id="aprice" type="number" placeholder="Price">
+<input id="adesc" placeholder="Product description">
+<button onclick="addProduct()">Add Product</button>
+<h3>Manage Products</h3>
+<div id="adminlist"></div>
+<p>Admin can add, delete, edit prices and update descriptions.</p>
+</section>
+
+<section id="leave" hidden>
+<h2>Thank You for Visiting TechSavvy!</h2>
+<p>You have reached the exit page. Visit us again!</p>
+<button onclick="show('home')">Return to Home</button>
+</section>
+
+<footer>
+<p>© 2026 TechSavvy | Online Gadget Shopping</p>
+</footer>
+
+<script>
+let items=[
+{id:1,name:"Smartphone",category:"Smartphones",price:15999,
+desc:"Latest smartphone with HD display"},
+{id:2,name:"Gaming Laptop",category:"Laptops",price:55999,
+desc:"High performance laptop"},
+{id:3,name:"Android Tablet",category:"Tablets",price:18999,
+desc:"Portable tablet for learning"},
+{id:4,name:"Wireless Earbuds",category:"Accessories",price:1999,
+desc:"Wireless audio accessories"},
+{id:5,name:"5G Smartphone",category:"Smartphones",price:24999,
+desc:"Fast 5G smartphone"},
+{id:6,name:"Office Laptop",category:"Laptops",price:42999,
+desc:"Laptop for office and study"}
+];
+
+let cart=[];
+let orders=JSON.parse(localStorage.getItem("orders")||"[]");
+let customer=localStorage.getItem("customer")||"";
+
+function show(id){
+document.querySelectorAll("body>section").forEach(s=>s.hidden=true);
+document.getElementById(id).hidden=false;
+if(id==="cart")displayCart();
+if(id==="orders")displayOrders();
+if(id==="admin")displayAdmin();
+}
+
+function displayCategories(){
+let cats=["Smartphones","Laptops","Tablets","Accessories"];
+document.getElementById("categories").innerHTML=cats.map(c=>
+`<button onclick="filterCategory('${c}')">${c}</button>`).join("");
+}
+
+function filterCategory(c){
+document.getElementById("category").value=c;
+displayProducts();
+}
+
+function displayProducts(){
+let q=document.getElementById("search").value.toLowerCase();
+let c=document.getElementById("category").value;
+let result=items.filter(p=>
+p.name.toLowerCase().includes(q)&&
+(c==="All"||p.category===c));
+document.getElementById("products").innerHTML=result.map(p=>`
+<div class="card">
+<h3>${p.name}</h3>
+<p>${p.category}</p>
+<p>${p.desc}</p>
+<p class="price">₹${p.price}</p>
+<button onclick="addCart(${p.id})">Add to Cart</button>
+<button onclick="alert('${p.name}: ${p.desc}\\nPrice: ₹${p.price}')">
+Details</button>
+<button onclick="alert('Availability: ${p.price>0?'In stock':'Out of stock'}')">
+Availability</button>
+</div>`).join("")||"No products found";
+}
+
+function login(){
+let n=document.getElementById("username").value.trim();
+let e=document.getElementById("email").value.trim();
+if(!n||!e){alert("Enter your name and email");return;}
+customer=n;
+localStorage.setItem("customer",n);
+document.getElementById("loginmsg").innerText="Welcome, "+n+"!";
+}
+
+function addCart(id){
+let p=items.find(x=>x.id===id);
+let old=cart.find(x=>x.id===id);
+if(old)old.qty++;
+else cart.push({...p,qty:1});
+updateCount();
+alert(p.name+" added to cart");
+}
+
+function updateCount(){
+document.getElementById("count").innerText=
+cart.reduce((s,p)=>s+p.qty,0);
+}
+
+function displayCart(){
+let total=0;
+document.getElementById("cartitems").innerHTML=cart.map(p=>{
+total+=p.price*p.qty;
+return `<p>${p.name} - ₹${p.price} 
+<button onclick="changeQty(${p.id},1)">+</button>
+${p.qty}
+<button onclick="changeQty(${p.id},-1)">-</button>
+<button onclick="removeCart(${p.id})">Remove</button></p>`;
+}).join("")||"Your cart is empty";
+document.getElementById("total").innerText="Total: ₹"+total;
+}
+
+function changeQty(id,n){
+let p=cart.find(x=>x.id===id);
+if(p){p.qty+=n;if(p.qty<=0)removeCart(id);}
+displayCart();updateCount();
+}
+
+function removeCart(id){
+cart=cart.filter(p=>p.id!==id);
+displayCart();updateCount();
+}
+
+function checkout(){
+if(!customer){alert("Please login before checkout");show("login");return;}
+if(cart.length===0){alert("Your cart is empty");return;}
+let order={number:Date.now(),customer:customer,
+items:cart.map(p=>({...p})),
+total:cart.reduce((s,p)=>s+p.price*p.qty,0),
+status:"Order Placed"};
+orders.push(order);
+localStorage.setItem("orders",JSON.stringify(orders));
+cart=[];
+updateCount();
+alert("Order placed successfully!");
+show("orders");
+}
+
+function displayOrders(){
+document.getElementById("orderlist").innerHTML=orders
+.filter(o=>o.customer===customer)
+.map(o=>`<section>
+<p>Order ID: ${o.number}</p>
+<p>Items: ${o.items.map(p=>p.name+" x "+p.qty).join(", ")}</p>
+<p>Total: ₹${o.total}</p>
+<p>Status: ${o.status}</p>
+</section>`).join("")||"No orders found";
+}
+
+function addProduct(){
+let n=document.getElementById("aname").value.trim();
+let c=document.getElementById("acategory").value;
+let p=Number(document.getElementById("aprice").value);
+let d=document.getElementById("adesc").value.trim();
+if(!n||p<=0||!d){alert("Enter valid product details");return;}
+items.push({id:Date.now(),name:n,category:c,price:p,desc:d});
+displayProducts();displayAdmin();
+alert("Product added successfully");
+}
+
+function displayAdmin(){
+document.getElementById("adminlist").innerHTML=items.map(p=>`
+<p>${p.name} - ₹${p.price}
+<button onclick="editProduct(${p.id})">Edit</button>
+<button onclick="deleteProduct(${p.id})">Delete</button></p>`).join("");
+}
+
+function editProduct(id){
+let p=items.find(x=>x.id===id);
+let price=prompt("Enter new price",p.price);
+if(price!==null&&price.trim()!==""&&Number(price)>0)p.price=Number(price);
+let desc=prompt("Enter new description",p.desc);
+if(desc!==null&&desc.trim()!=="")p.desc=desc.trim();
+displayProducts();displayAdmin();
+}
+
+function deleteProduct(id){
+if(confirm("Delete this product?")){
+items=items.filter(p=>p.id!==id);
+displayProducts();displayAdmin();
+}
+}
+
+displayCategories();
+displayProducts();
+</script>
+</body>
+</html>
+```
